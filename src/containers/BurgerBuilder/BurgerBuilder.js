@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import Auxiliary from '../../hoc/Auxiliary'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
+import Modal from '../../components/UI/Modal/Modal'
+
+
 const INGREDIENTS_PRICE = {
     salad: 0.5,
     cheese: 0.4,
@@ -68,7 +71,7 @@ class BurgerBuilder extends Component{
         // {salad: true, meat: false } this is how disabledInfo is shown
         return(
             <Auxiliary>
-                
+                <Modal/>
                 <Burger ingredients= {this.state.ingredients}/>
                 <BuildControls 
                 price = {this.state.totalPrice}
