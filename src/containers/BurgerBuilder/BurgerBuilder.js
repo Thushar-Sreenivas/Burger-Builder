@@ -52,8 +52,10 @@ class BurgerBuilder extends Component{
         // {salad: true, meat: false } this is how disabledInfo is shown
         return(
             <Auxiliary>
+                
                 <Burger ingredients= {this.state.ingredients}/>
                 <BuildControls 
+                price = {this.state.totalPrice}
                 ingredientsAdded= {this.addIngredientsHandler}
                 disabled= {disabledInfo}
                 ingredientsRemoved= {this.removeIngredientsHandler}/>
