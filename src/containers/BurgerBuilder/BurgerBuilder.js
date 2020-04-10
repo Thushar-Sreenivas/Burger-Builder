@@ -3,7 +3,7 @@ import Auxiliary from '../../hoc/Auxiliary'
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal'
-
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 
 const INGREDIENTS_PRICE = {
     salad: 0.5,
@@ -71,7 +71,9 @@ class BurgerBuilder extends Component{
         // {salad: true, meat: false } this is how disabledInfo is shown
         return(
             <Auxiliary>
-                <Modal/>
+                <Modal>
+                    <OrderSummary ingredients={this.state.ingredients}/>
+                </Modal>
                 <Burger ingredients= {this.state.ingredients}/>
                 <BuildControls 
                 price = {this.state.totalPrice}
@@ -80,7 +82,6 @@ class BurgerBuilder extends Component{
                 disabled= {disabledInfo}
                 purchaseable = {this.state.purchaseable}/>
                 
-                {/* <h1>{this.state.totalPrice}</h1> */}
             </Auxiliary>
         )
     }
