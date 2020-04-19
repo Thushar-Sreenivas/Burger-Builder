@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './NavigationItems.css'
 import NavigationItem from './NavigationItem/NavigationItem'
-import Checkout from '../../../containers/Checkout/Checkout'
+// import Checkout from '../../../containers/Checkout/Checkout'
 
 const navigationItems = () => (
     <ul className={classes.NavigationItems}>
