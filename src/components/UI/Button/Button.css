@@ -1,4 +1,4 @@
-Button {
+.Button {
     background-color: transparent;
     border: none;
     color: white;
@@ -13,6 +13,11 @@ Button {
 .Button:first-of-type {
     margin-left: 0;
     padding-left: 0;
+}
+
+.Button:disabled {
+    color: #ccc;
+    cursor: not-allowed;
 }
 
 .Success {
