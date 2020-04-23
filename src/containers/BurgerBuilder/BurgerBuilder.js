@@ -36,7 +36,7 @@ class BurgerBuilder extends Component{
         .reduce((sum,i) => {
            return sum = sum + i
         },0)
-        this.setState({purchaseable: totalSum > 0})
+        return totalSum > 0    
     }
 
     // addIngredientsHandler = (type) => {
@@ -72,18 +72,7 @@ class BurgerBuilder extends Component{
         this.setState({purchasing: false})
     }
     purchaseContinueHandler = () => {
-    //     // alert('Continue aayi mone')
-    
-    const queryParams = []
-    for ( let i in this.props.ings){
-        queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.props.ings[i]))
-    }
-    queryParams.push('price=' + this.state.totalPrice)
-    const queryString = queryParams.join('&')
-    this.props.history.push({
-        pathname: '/checkout',
-        search: '?' + queryString
-    })
+    this.props.history.push('/checkout')
     }
     
     render() {
@@ -106,7 +95,7 @@ class BurgerBuilder extends Component{
                         ingredientsAdded= {this.props.onIngredientAdded}
                         ingredientsRemoved= {this.props.onIngredientRemoved}
                         disabled= {disabledInfo}
-                        purchaseable = {this.state.purchaseable}
+                        purchaseable = {this.updatePurchaseState(this.props.ings)}
                         ordered = {this.purchaseHandler}/>
                 </Auxiliary>
             )
