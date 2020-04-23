@@ -9,16 +9,10 @@ import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import { connect } from 'react-redux'
 import * as actionType from '../../store/action'
-const INGREDIENTS_PRICE = {
-    salad: 0.5,
-    cheese: 0.4,
-    meat: 1.3,
-    bacon: 0.7
-}
+
+
 class BurgerBuilder extends Component{
     state = {
-        // ingredients: null,
-        totalPrice: 4,
         purchaseable: false,
         purchasing: false,
         loading: false,
@@ -45,31 +39,31 @@ class BurgerBuilder extends Component{
         this.setState({purchaseable: totalSum > 0})
     }
 
-    addIngredientsHandler = (type) => {
-        const count = this.state.ingredients[type] + 1
-        const updatedIngredients = {
-            ...this.state.ingredients
-        }
-        updatedIngredients[type] = count
-        const newPrice = this.state.totalPrice +  INGREDIENTS_PRICE[type]
-        this.setState({totalPrice: newPrice, ingredients: updatedIngredients})
-        this.updatePurchaseState(updatedIngredients)
-    }
+    // addIngredientsHandler = (type) => {
+    //     const count = this.state.ingredients[type] + 1
+    //     const updatedIngredients = {
+    //         ...this.state.ingredients
+    //     }
+    //     updatedIngredients[type] = count
+    //     const newPrice = this.state.totalPrice +  INGREDIENTS_PRICE[type]
+    //     this.setState({totalPrice: newPrice, ingredients: updatedIngredients})
+    //     this.updatePurchaseState(updatedIngredients)
+    // }
 
-    removeIngredientsHandler = (type) => {
-        if (this.state.ingredients[type] <=0) {
-            return
-        }
-        const delCount = this.state.ingredients[type] - 1
-        const delIngredients = {
-            ...this.state.ingredients
-        } 
-        delIngredients[type] = delCount
-        const delPrice = this.state.totalPrice - INGREDIENTS_PRICE[type]
-        this.setState({ingredients: delIngredients, totalPrice: delPrice})
-        this.updatePurchaseState(delIngredients)
+    // removeIngredientsHandler = (type) => {
+    //     if (this.state.ingredients[type] <=0) {
+    //         return
+    //     }
+    //     const delCount = this.state.ingredients[type] - 1
+    //     const delIngredients = {
+    //         ...this.state.ingredients
+    //     } 
+    //     delIngredients[type] = delCount
+    //     const delPrice = this.state.totalPrice - INGREDIENTS_PRICE[type]
+    //     this.setState({ingredients: delIngredients, totalPrice: delPrice})
+    //     this.updatePurchaseState(delIngredients)
 
-    }
+    // }
     purchaseHandler = () => {
         this.setState({purchasing: true})
     }
@@ -108,9 +102,9 @@ class BurgerBuilder extends Component{
                 <Auxiliary>
                     <Burger ingredients= {this.props.ings}/>
                     <BuildControls 
-                        price = {this.state.totalPrice}
-                        ingredientsAdded= {this.props.addIngredient}
-                        ingredientsRemoved= {this.removeIngredientsHandler}
+                        price = {this.props.price}
+                        ingredientsAdded= {this.props.onIngredientAdded}
+                        ingredientsRemoved= {this.props.onIngredientRemoved}
                         disabled= {disabledInfo}
                         purchaseable = {this.state.purchaseable}
                         ordered = {this.purchaseHandler}/>
@@ -119,7 +113,7 @@ class BurgerBuilder extends Component{
             orderSummary = <OrderSummary ingredients={this.props.ings}
                         purchaseCancelled={this.purchaseCancelHandler}
                         purchaseContinued ={this.purchaseContinueHandler}
-                        price={this.state.totalPrice}/>
+                        price={this.props.price}/>
             }
             if( this.state.loading) {
                     orderSummary= <Spinner/>
@@ -138,9 +132,10 @@ class BurgerBuilder extends Component{
 }
 const mapStatetoProps = state => {
     return {
-        ings: state.ingredients
+        ings: state.ingredients,
+        price: state.totalPrice
     }
-    // price: state.totalPrice
+    
 }
 
 const mapDispatchToProps = dispatch => {
