@@ -4,28 +4,23 @@ import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
-import axios from '../../axios.orders'
 import Spinner from '../../components/UI/Spinner/Spinner'
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler'
 import { connect } from 'react-redux'
-import * as actionType from '../../store/action'
+import * as burgerBuilderActions from '../../store/actions/index'
+import axios from '../../axios.orders'
 
 
 class BurgerBuilder extends Component{
     state = {
         purchaseable: false,
         purchasing: false,
-        loading: false,
-        error: false
+        
     }
     componentDidMount () {
         console.log(this.props)
-        // axios.get('https://react-my-burger-7ae37.firebaseio.com/ingredients.json')
-        // .then(response => {
-        //     this.setState({ingredients: response.data})
-        // })
-        // .catch(error => {
-        //     this.setState({error: true})})
+        this.props.onInitIngredients()
+        
     }
     updatePurchaseState (ingredientsValue) {
         
@@ -85,7 +80,7 @@ class BurgerBuilder extends Component{
         // {salad: true, meat: false } this is how disabledInfo is shown
         let orderSummary = null
         
-        let burger = this.state.error ? <p>Ingredients not loading</p> : <Spinner />
+        let burger = this.props.error ? <p>Ingredients not loading</p> : <Spinner />
         if(this.props.ings) {
             burger = (
                 <Auxiliary>
@@ -103,9 +98,8 @@ class BurgerBuilder extends Component{
                         purchaseCancelled={this.purchaseCancelHandler}
                         purchaseContinued ={this.purchaseContinueHandler}
                         price={this.props.price}/>
-            }
-            if( this.state.loading) {
-                    orderSummary= <Spinner/>
+            
+            
                     
         }
 
@@ -122,17 +116,18 @@ class BurgerBuilder extends Component{
 const mapStatetoProps = state => {
     return {
         ings: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        error: state.error
     }
     
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded: (ingName) => dispatch({type: actionType.ADD_INGREDIENT, ingredientName: ingName}),
-        onIngredientRemoved: (ingName) => dispatch({type: actionType.REMOVE_INGREDIENT, ingredientName: ingName})
+        onIngredientAdded: (ingName) => dispatch(burgerBuilderActions.addIngredients(ingName)),
+        onIngredientRemoved: (ingName) => dispatch(burgerBuilderActions.removeIngredients(ingName)),
+        onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients())
     }
-
 }
 
 export default connect(mapStatetoProps,mapDispatchToProps) (withErrorHandler(BurgerBuilder, axios))
