@@ -34,31 +34,6 @@ class BurgerBuilder extends Component{
         return totalSum > 0    
     }
 
-    // addIngredientsHandler = (type) => {
-    //     const count = this.state.ingredients[type] + 1
-    //     const updatedIngredients = {
-    //         ...this.state.ingredients
-    //     }
-    //     updatedIngredients[type] = count
-    //     const newPrice = this.state.totalPrice +  INGREDIENTS_PRICE[type]
-    //     this.setState({totalPrice: newPrice, ingredients: updatedIngredients})
-    //     this.updatePurchaseState(updatedIngredients)
-    // }
-
-    // removeIngredientsHandler = (type) => {
-    //     if (this.state.ingredients[type] <=0) {
-    //         return
-    //     }
-    //     const delCount = this.state.ingredients[type] - 1
-    //     const delIngredients = {
-    //         ...this.state.ingredients
-    //     } 
-    //     delIngredients[type] = delCount
-    //     const delPrice = this.state.totalPrice - INGREDIENTS_PRICE[type]
-    //     this.setState({ingredients: delIngredients, totalPrice: delPrice})
-    //     this.updatePurchaseState(delIngredients)
-
-    // }
     purchaseHandler = () => {
         this.setState({purchasing: true})
     }
@@ -115,9 +90,9 @@ class BurgerBuilder extends Component{
 }
 const mapStatetoProps = state => {
     return {
-        ings: state.ingredients,
-        price: state.totalPrice,
-        error: state.error
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        error: state.burgerBuilder.error
     }
     
 }
