@@ -6,4 +6,5 @@ initIngredients
 
 export {
     purchaseBurger,
+    purchaseInit
 } from './order'
